@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({limit:"30mb",extended:true}));
 app.use(cors);
 app.use("/assets",express.static(path.join(__dirname,'public/assets')));
 
-const storege = multer.diskStorage({
+const storage = multer.diskStorage({
     destination:(req,file,cb) => {
         cb(null,"public/assets");
     },
@@ -37,6 +37,17 @@ const storege = multer.diskStorage({
 });
 const upload = multer({storage});
 
+// Connecting Database 
 const PORT = process.env.PORT;
-app.listen(process.env.PORT||8880,() => console.log("Sever Start Port"+PORT));
+mongoose.connect(process.env.MONGO_URL,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+})
+    .then(() => {
+        app.listen(process.env.PORT||8880,() => console.log("Sever Start Port :"+PORT));
+        console.log("Connected Database")
+    })
+    .catch((err) => console.log(err))
+
+
  
