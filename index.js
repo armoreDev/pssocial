@@ -35,7 +35,7 @@ const storege = multer.diskStorage({
         cb(null,file.originalname);
     }
 });
-
+const upload = multer({storage});
 
 const PORT = process.env.PORT;
 app.listen(process.env.PORT||8880,() => console.log("Sever Start Port"+PORT));
