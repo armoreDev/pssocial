@@ -16,7 +16,6 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const app = express()
-const route = express.Router()
 //middleware here
 
 app.use(express.json());
@@ -27,7 +26,6 @@ app.use(bodyParser.json({limit:"30mb",extended:true}));
 app.use(bodyParser.urlencoded({limit:"30mb",extended:true}));
 app.use(cors);
 app.use("/assets",express.static(path.join(__dirname,'public/assets')));
-
 
 const PORT = process.env.PORT;
 app.listen(process.env.PORT||8880,() => console.log("Sever Start Port"+PORT));
