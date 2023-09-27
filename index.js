@@ -27,6 +27,16 @@ app.use(bodyParser.urlencoded({limit:"30mb",extended:true}));
 app.use(cors);
 app.use("/assets",express.static(path.join(__dirname,'public/assets')));
 
+const storege = multer.diskStorage({
+    destination:(req,file,cb) => {
+        cb(null,"public/assets");
+    },
+    filename:(req,file)=>{
+        cb(null,file.originalname);
+    }
+});
+
+
 const PORT = process.env.PORT;
 app.listen(process.env.PORT||8880,() => console.log("Sever Start Port"+PORT));
  
