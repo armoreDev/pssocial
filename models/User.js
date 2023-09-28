@@ -3,23 +3,23 @@ import mongoose from "mongoose";
 const UserSchema = mongoose.Schema({
     firstName:{
         type:String,
-        require:true,
+        required:true,
         min:2,
         max:50,
 
     },
     lastName:{
         type:String,
-        require:true,
+        required:true,
         min:2,
         max:50,
 
     },
     email:{
         type:String,
-        require:true,
+        required:true,
+        // unique:true,
         max:50,
-        unique:true
         
     },
     password:{
@@ -27,7 +27,7 @@ const UserSchema = mongoose.Schema({
         min:5,
 
     },	
-    freind:{
+    freinds:{
         type:Array,
         default:[],
     },
@@ -35,10 +35,13 @@ const UserSchema = mongoose.Schema({
         type:String,
         default:"",
     },
-    location:	String,
-	occupation:	String,
-    viewedProfile:	Number,
-	impressions:	Number
+    location:{
+        type:String,
+        default:"",
+    },
+	occupation:String,
+    viewedProfile:Number,
+	impressions:Number
 },
 {timestamps:true}
 );
