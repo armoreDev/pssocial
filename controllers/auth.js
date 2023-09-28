@@ -44,3 +44,7 @@ export const register = async (req , res) => {
         res.status(500).json({error:err})
     }
 };
+
+export const login = async ( req , res ) => {
+    console.log("login controllers")
+}
