@@ -26,11 +26,11 @@ const UserSchema = mongoose.Schema({
         type:String,
         min:5,
 
-    }	
+    },	
     freind:{
         type:Array,
         default:[],
-    }
+    },
     picturePath:{
         type:String,
         default:"",
