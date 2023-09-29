@@ -9,6 +9,7 @@ import path from "path";
 import helmet from "helmet"
 import { fileURLToPath } from "url";
 import { register } from "./controllers/auth.js";
+import authRoute from './routes/auth.js';
 
 // configuration
 
@@ -39,8 +40,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage:storage })
 
 
-/* Ruotes with file */
+/* Routes with file */
 app.post('/auth/register',upload.single("picture"),register);
+
+// Routes Logging in
+app.use('/auth',authRoute)
 
 
 // Connecting Database 

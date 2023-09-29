@@ -5,7 +5,6 @@ import User from "../models/User.js";
 //  REGISTER USER
 export const register = async (req , res) => {
     try {
-        
         const {
             firstName,
             lastName,
@@ -46,5 +45,13 @@ export const register = async (req , res) => {
 };
 
 export const login = async ( req , res ) => {
-    console.log("login controllers")
-}
+    try {
+        const {
+            email,
+            password
+        } = req.body
+        console.log({email,password});
+    } catch (error) {
+        res.status(500).json({error:err})
+    }
+};
