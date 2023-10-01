@@ -11,7 +11,7 @@ export const register = async (req, res) => {
             lastName,
             email,
             password,
-            freinds,
+            friends,
             location,
             occupation,
 
@@ -28,7 +28,7 @@ export const register = async (req, res) => {
             lastName,
             email,
             password: passwordHash,
-            freinds,
+            friends,
             picturePath: file.filename,
             location,
             occupation,
@@ -76,6 +76,7 @@ export const getUser = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await User.findById(id);
+
         delete user._doc.password;
         return res.status(200).json(user);
 
@@ -85,9 +86,24 @@ export const getUser = async (req, res) => {
 };
 
 
-export const getUserFreinds = (req, res) => {
-    console.log("getUserFreind");
+export const getUserFriends = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findById(id);
+
+        const friends = await Promise.all(
+            user.friends.map(async id => {
+                const friend = await User.findById(id);
+                delete friend._doc.password;
+                return friend;
+            })
+        )
+        const formatFriends = friends.map()
+
+    } catch (error) {
+    res.status(404).json({ error: error.massage })
 }
-export const addRemoveFreind = (req, res) => {
+}
+export const addRemoveFriend = (req, res) => {
     console.log("addremove Func");
 }
