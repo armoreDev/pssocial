@@ -59,11 +59,9 @@ export const login = async (req, res) => {
             return res.status(400).json({ massage: " Password is Invalid" });
         }
 
-        const token = jwt.sign({ id: user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: "1d", algorithm: "HS256" }
-        );
-        delete user.password;
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+        // delete user.password;
         return res.status(200).json({
             token,
             user
@@ -72,6 +70,20 @@ export const login = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err });
     };
+};
 
-
+export const getUser = async (req, res) => {
+    try {
+        const {id} = req.params ; 
+        const user = User.findById(id);
+        console.log(user);
+    } catch (error) {
+        res.status(404).json({ massege: error.massage })
+    }
+};
+export const getUserFreinds = (req, res) => {
+    console.log("getUserFreind");
+}
+export const addRemoveFreind = (req, res) => {
+    console.log("addremove Func");
 }

@@ -1,26 +1,24 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
-export const varifyToken = async (req, res, next) => {
+export const varifyToken = (req, res, next) => {
     try {
+
+
         let token = req.header("Authorization");
 
         if (!token) {
             return res.status(403).send("Access Denied");
         }
-        console.log(token);
         if (token.startsWith("Bearer ")) {
-            token = token.slice(7,token.length).trim();
-        }
-
-        const verified = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = verified ;
+            token = token.split(" ");
+        };
+        const decoded = token[1].trim();
+        const verified = jwt.verify(decoded, process.env.JWT_SECRET);
+         req.user = verified;   
         next();
-
-
+        
     } catch (err) {
-        res.status(500).json({error:err})
+        res.status(500).json({ error: err.message })
+        
     }
-    // finally{
-    //     next()
-    // }
 }

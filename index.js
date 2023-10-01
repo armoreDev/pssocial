@@ -10,6 +10,7 @@ import helmet from "helmet"
 import { fileURLToPath } from "url";
 import { login, register } from "./controllers/auth.js";
 import authRouter from './routes/auth.js'
+import userRouter from './routes/user.js'
 import { varifyToken } from './middleware/auth.js';
 
 // configuration
@@ -46,6 +47,10 @@ app.post('/auth/register', upload.single("picture"), register);
 
 /* Routes auth Login */
 app.use('/auth', authRouter)
+
+app.use('/user',userRouter)
+
+
 
 
 // Connecting Database 
