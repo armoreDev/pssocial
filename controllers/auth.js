@@ -13,7 +13,6 @@ export const register = async (req, res) => {
             email,
             password,
             freinds,
-            picturePath,
             location,
             occupation,
 
