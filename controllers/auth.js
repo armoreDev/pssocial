@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import { token } from "morgan";
 
 //  REGISTER USER
 export const register = async (req, res) => {
@@ -73,4 +72,6 @@ export const login = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err });
     };
+
+
 }
