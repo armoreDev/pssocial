@@ -40,18 +40,32 @@ export const register = async (req , res) => {
         res.status(201).json(saveUser);
 
     } catch (err) {
-        res.status(500).json({error:err})
+        res.status(500).json({ error:err.massage })
     }
 };
 
 export const login = async ( req , res ) => {
     try {
-        const {
-            email,
-            password
-        } = req.body
-        console.log({email,password});
+        const { email, password} = req.body;
+        const user = await User.findOne({ email : email });
+        if(!user){
+            res.staus(400).json({ msg: "User do not exist"});
+        };
+        const userCopy = { ...user }
+        console.log(userCopy);
+        
+        const isMatch = await bcrypt.compare( password , user.password );
+        if(!isMatch){
+            res.status(400).json({ msg : "Password invalid"})
+        }
+        
+        const token = jwt.sign({ id : userCopy._id } , process.env.JWT_SECRET);
+        delete userCopy.password;
+        console.log(userCopy);
+        
+        res.status(200).json({ token , user });
+        
     } catch (error) {
-        res.status(500).json({error:err})
-    }
+        res.status(500).json({err:error});
+    };
 };
