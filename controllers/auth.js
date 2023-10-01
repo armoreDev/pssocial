@@ -61,7 +61,7 @@ export const login = async (req, res) => {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-        // delete user.password;
+        delete user._doc.password;
         return res.status(200).json({
             token,
             user
@@ -74,13 +74,17 @@ export const login = async (req, res) => {
 
 export const getUser = async (req, res) => {
     try {
-        const {id} = req.params ; 
-        const user = User.findById(id);
-        console.log(user);
+        const { id } = req.params;
+        const user = await User.findById(id);
+        delete user._doc.password;
+        return res.status(200).json(user);
+
     } catch (error) {
         res.status(404).json({ massege: error.massage })
     }
 };
+
+
 export const getUserFreinds = (req, res) => {
     console.log("getUserFreind");
 }
