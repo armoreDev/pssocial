@@ -27,7 +27,7 @@ const UserSchema = mongoose.Schema({
         min:5,
 
     },	
-    freinds:{
+    friends:{
         type:Array,
         default:[],
     },
