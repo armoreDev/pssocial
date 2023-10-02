@@ -8,10 +8,12 @@ import morgan from "morgan";
 import path from "path";
 import helmet from "helmet"
 import { fileURLToPath } from "url";
-import { login, register } from "./controllers/auth.js";
+import { register } from "./controllers/auth.js";
+import { createPost } from './controllers/posts.js'
 import authRouter from './routes/auth.js'
 import userRouter from './routes/user.js'
-import { varifyToken } from './middleware/auth.js';
+import postsRouter from './routes/posts.js'
+import { verifyToken } from './middleware/auth.js';
 
 // configuration
 
@@ -44,12 +46,12 @@ const upload = multer({ storage: storage })
 
 /* Routes with file */
 app.post('/auth/register', upload.single("picture"), register);
+app.post('/posts', verifyToken, upload.single("picture"), createPost);
 
-/* Routes auth Login */
+/* Routes */
 app.use('/auth', authRouter)
-
-app.use('/user',userRouter)
-
+app.use('/user', userRouter)
+app.use('/posts', postsRouter)
 
 
 
