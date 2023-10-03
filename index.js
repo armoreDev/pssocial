@@ -14,6 +14,9 @@ import authRouter from './routes/auth.js'
 import userRouter from './routes/user.js'
 import postsRouter from './routes/posts.js'
 import { verifyToken } from './middleware/auth.js';
+import User from "./models/User.js";
+import Post from "./models/Post.js";
+import { users, posts } from './data/index.js'
 
 // configuration
 
@@ -65,6 +68,10 @@ mongoose
     .then(() => {
         app.listen(process.env.PORT || 8880, () => console.log("Sever Start Port :" + PORT));
         console.log("Connected Database")
+
+        //ADD DATA ONCE TIME
+        // User.insertMany(users);
+        // Post.insertMany(posts);
     })
     .catch((err) => console.log(err))
 

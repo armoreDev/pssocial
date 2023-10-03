@@ -17,7 +17,7 @@ const postSchema = Schema({
     discription:String,
     picturePath:String,
     userPicturePath:String,
-    like:{
+    likes:{
         type:Map,
         of:Boolean,
     },
