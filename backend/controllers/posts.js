@@ -5,7 +5,8 @@ import User from "../models/User.js";
 export const createPost = async (req, res) => {
     try {
         const { userId, description } = req.body;
-        const { path } = req.file;
+        const file = req.file;
+        console.log(file);
         const user = await User.findById(userId);
         const { firstName, lastName, location } = user;
         const userPicturePath = user.picturePath;
@@ -30,7 +31,6 @@ export const createPost = async (req, res) => {
 };
 
 export const getFeedPosts = async (req, res) => {
-    console.log('get feed post controllers');
     try {
         const post = await Post.find();
         res.status(200).json(post);
@@ -40,7 +40,6 @@ export const getFeedPosts = async (req, res) => {
 }
 export const getUserPosts = async (req, res) => {
     try {
-        console.log('get user post controllers');
         const { userId } = req.params;
         const posts = await Post.find({ userId });
         res.status(200).json({ posts });
@@ -62,7 +61,8 @@ export const likePost = async (req, res) => {
         }
         const updatePost = await Post.findByIdAndUpdate(
             id,
-            { likes : post.likes}
+            { likes: post.likes },
+            { new: true }
         );
         res.status(200).json(updatePost);
 
