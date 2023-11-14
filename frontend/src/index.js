@@ -11,11 +11,14 @@ import {
   REGISTER,
   PAUSE,
   PURGE,
+  PERSIST
+  
 } from "redux-persist";
 import authReducer from "./store";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+
 const persistConfig = {
   key: "root",
   storage,
@@ -23,14 +26,24 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
+// const store = configureStore({
+//   reducer: persistedReducer,
+//   middleware: (getDefaultMiddleware) => {
+//     return getDefaultMiddleware({
+//       serializableCheck: [FLUSH, REHYDRATE, REGISTER, PAUSE, PURGE],
+//     });
+//   },
+// });
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware({
-      serializableCheck: [FLUSH, REHYDRATE, REGISTER, PAUSE, PURGE],
-    });
-  },
-});
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+})
+
 const persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
