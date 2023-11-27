@@ -21,9 +21,9 @@ import {
   Close,
 } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
-import { setmode, setLogout } from "../../store";
+import { setmode, setLogout } from "../store";
 import { useNavigate } from "react-router-dom";
-import FlexBetween from "../../components/FlexBetween";
+import FlexBetween from "./FlexBetween";
 
 function NavBar() {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -39,18 +39,19 @@ function NavBar() {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  const fullName = "Arm MM"; //`${user.firstname} ${user.lastname}`;
+  const fullName =`${user.firstName} ${user.lastName}`;
 
   return (
     <FlexBetween padding="1rem 6%" background={alt}>
       <FlexBetween gap="1.75rem">
         <Typography
+          color="primary"
           fontWeight="bold"
           fontSize="clamp(1rem ,2rem ,2.25rem)"
           onClick={() => navigate("/home")}
           sx={{
             "&:hover": {
-              color: primaryLight,
+              color: "primaryLight",
               cursor: "pointer",
             },
           }}
@@ -97,7 +98,7 @@ function NavBar() {
                   width: "3rem",
                 },
                 "& .MuiSelct-select:focus": {
-                  backgroundColor: neutralLight,
+                  backgroundColor: dark,
                 },
               }}
               input={<InputBase />}

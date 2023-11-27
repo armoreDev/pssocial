@@ -1,29 +1,34 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./scenes/loginPage";
-import Profile from "./scenes/profilePage";
-import Home from "./scenes/homePage";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./components/LoginPage";
+import ProfilePage from "./components/ProFilePage";
+import HomePage from "./components/HomePage";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
-import NavBar from "./scenes/navBar";
+import NavBar from "./components/NavBar";
 
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const isAuth = Boolean(useSelector((state) => state.token));
   return (
     <div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <NavBar />
           <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/profile/:userId" element={<Profile />} />
+            <Route path="/" element={!isAuth ? <LoginPage /> : <HomePage />} />
+            <Route
+              path="/home"
+              element={isAuth ? <HomePage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/profile/:userId"
+              element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+            />
           </Routes>
-          
         </ThemeProvider>
       </BrowserRouter>
     </div>
