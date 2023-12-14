@@ -3,18 +3,18 @@ import { Schema , model } from "mongoose";
 const postSchema = Schema({
     userId:{
         type:String,
-        require:true
+        required:true
     },
     firstName:{
         type:String,
-        require:true
+        required:true
     },
     lastName:{
         type:String,
-        require:true
+        required:true
     },
     location:String,
-    discription:String,
+    description:String,
     picturePath:String,
     userPicturePath:String,
     likes:{

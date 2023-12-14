@@ -6,7 +6,7 @@ import {
   Typography,
   Select,
   MenuItem,
-  useTheme,
+  // useTheme,
   useMediaQuery,
   FormControl,
 } from "@mui/material";
@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setmode, setLogout } from "../store";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
+import { useTheme } from '@mui/material/styles';
 
 function NavBar() {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -39,10 +40,10 @@ function NavBar() {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  const fullName =`${user.firstName} ${user.lastName}`;
+  const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
-    <FlexBetween padding="1rem 6%" background={alt}>
+    <FlexBetween padding="1rem 6%" backgroundColor={alt} mb="1rem">
       <FlexBetween gap="1.75rem">
         <Typography
           color="primary"
@@ -51,7 +52,7 @@ function NavBar() {
           onClick={() => navigate("/home")}
           sx={{
             "&:hover": {
-              color: "primaryLight",
+              color: primaryLight,
               cursor: "pointer",
             },
           }}
@@ -74,7 +75,7 @@ function NavBar() {
       </FlexBetween>
       {/* Nav Desktop */}
       {isNonMobileScreen ? (
-        <FlexBetween alignContent="center" justifyContent="center" gap="2rem">
+        <FlexBetween gap="2rem">
           <IconButton onClick={() => dispatch(setmode())}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "25px" }} />
@@ -82,9 +83,15 @@ function NavBar() {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
-          <Help sx={{ fontSize: "25px" }} />
+          <IconButton>
+            <Message sx={{ fontSize: "25px" }} />
+          </IconButton>
+          <IconButton>
+            <Notifications sx={{ fontSize: "25px" }} />
+          </IconButton>
+          <IconButton>
+            <Help sx={{ fontSize: "25px" }} />
+          </IconButton>
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
@@ -145,9 +152,9 @@ function NavBar() {
             alignItems="center"
             gap="3rem"
           >
-            <IconButton 
-            onClick={() => dispatch(setmode())}
-            sx={{fontSize : "25px"}}
+            <IconButton
+              onClick={() => dispatch(setmode())}
+              sx={{ fontSize: "25px" }}
             >
               {theme.palette.mode === "dark" ? (
                 <DarkMode sx={{ fontSize: "25px" }} />
